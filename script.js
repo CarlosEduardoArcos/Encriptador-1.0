@@ -1,26 +1,46 @@
-// script.js
+// Función para encriptar el texto usando el cifrado César
 function cifrarTexto() {
-    let texto = document.getElementById("texto").value;
-    let desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+    const texto = document.getElementById("texto").value;
+    const desplazamiento = parseInt(document.getElementById("desplazamiento").value);
     let resultado = "";
 
     for (let i = 0; i < texto.length; i++) {
-        let char = texto[i];
+        let charCode = texto.charCodeAt(i);
 
-        if (char.match(/[a-z]/i)) {
-            let codigo = texto.charCodeAt(i);
-
-            // Letras mayúsculas
-            if ((codigo >= 65) && (codigo <= 90)) {
-                char = String.fromCharCode(((codigo - 65 + desplazamiento) % 26) + 65);
-            }
-            // Letras minúsculas
-            else if ((codigo >= 97) && (codigo <= 122)) {
-                char = String.fromCharCode(((codigo - 97 + desplazamiento) % 26) + 97);
-            }
+        if (charCode >= 65 && charCode <= 90) {
+            // Mayúsculas
+            resultado += String.fromCharCode((charCode - 65 + desplazamiento) % 26 + 65);
+        } else if (charCode >= 97 && charCode <= 122) {
+            // Minúsculas
+            resultado += String.fromCharCode((charCode - 97 + desplazamiento) % 26 + 97);
+        } else {
+            // Otros caracteres no se encriptan
+            resultado += texto[i];
         }
+    }
 
-        resultado += char;
+    document.getElementById("resultado").value = resultado;
+}
+
+// Función para desencriptar el texto usando el cifrado César
+function desencriptarTexto() {
+    const texto = document.getElementById("texto").value;
+    const desplazamiento = parseInt(document.getElementById("desplazamiento").value);
+    let resultado = "";
+
+    for (let i = 0; i < texto.length; i++) {
+        let charCode = texto.charCodeAt(i);
+
+        if (charCode >= 65 && charCode <= 90) {
+            // Mayúsculas
+            resultado += String.fromCharCode((charCode - 65 - desplazamiento + 26) % 26 + 65);
+        } else if (charCode >= 97 && charCode <= 122) {
+            // Minúsculas
+            resultado += String.fromCharCode((charCode - 97 - desplazamiento + 26) % 26 + 97);
+        } else {
+            // Otros caracteres no se desencriptan
+            resultado += texto[i];
+        }
     }
 
     document.getElementById("resultado").value = resultado;
